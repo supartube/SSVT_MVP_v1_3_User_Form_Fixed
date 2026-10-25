@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ssvt-private-beta
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: SSVT_ENV
+        value: production
+      - key: SSVT_SECRET_KEY
+        generateValue: true
+      - key: SSVT_INVITE_CODE
+        generateValue: true
+      - key: SSVT_ADMIN_TOKEN
+        generateValue: true
+      - key: SSVT_MAX_UPLOAD_BYTES
+        value: "52428800"
+      - key: SSVT_MAX_VIDEOS_PER_USER
+        value: "2"
+      - key: SSVT_MAX_USERS
+        value: "50"
+      - key: SSVT_LLM_ENABLED
+        value: "false"
